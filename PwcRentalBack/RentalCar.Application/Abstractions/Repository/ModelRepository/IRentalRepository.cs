@@ -1,4 +1,5 @@
-﻿using RentalCar.Domain.Entities;
+﻿using RentalCar.Application.Features.CustomerFeatures.Get;
+using RentalCar.Domain.Entities;
 
 namespace RentalCar.Application.Abstractions.Repository.ModelRepository;
 
@@ -9,4 +10,6 @@ public interface IRentalRepository : IBaseRepository<Rental>
 	public Task<bool> GetRentalByDateAsync(Rental rental, CancellationToken cancellationToken);
 
 	public Task<List<Rental>> GetAllWithRelationAsync(CancellationToken cancellationToken);
+
+	public Task<bool> CheckAvailabilityAsync(CheckAvailabilityRequest input, CancellationToken cancellationToken);
 }

@@ -1,6 +1,6 @@
 ﻿using Riok.Mapperly.Abstractions;
 using RentalCar.Domain.Entities;
-using RentalCar.Domain.Dto;
+using RentalCar.Domain.Dto.Service;
 
 namespace RentalCar.Domain.Mapper
 {

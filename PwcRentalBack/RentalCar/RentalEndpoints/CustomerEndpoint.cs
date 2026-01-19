@@ -7,7 +7,7 @@ using RentalCar.Domain.Dto.Customer;
 using RentalCar.Domain.Entities;
 using RentalCar.Domain.Mapper;
 
-namespace RentalCar.Api.Controllers;
+namespace RentalCar.Api.RentalEndpoints;
 
 public class CustomerEndpoint : ICarterModule
 {

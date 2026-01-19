@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RentalCar.Application.Abstractions.Repository.ModelRepository;
+using RentalCar.Application.Features.CustomerFeatures.Get;
 using RentalCar.Domain.Entities;
 using RentalCar.Persistence.Context;
 
@@ -7,7 +8,12 @@ namespace RentalCar.Persistence.Repository.ModelRepository;
 
 public class RentalRepository(RentalContext _context) : BaseRepository<Rental>(_context), IRentalRepository
 {
-	public async Task<List<Rental>> GetAllWithRelationAsync(CancellationToken cancellationToken)
+    public async Task<bool> CheckAvailabilityAsync(CheckAvailabilityRequest input, CancellationToken cancellationToken)
+    {
+		return await _context.Rentals.Include(x => x.Customer).AnyAsync(x => x.StartDate <= input.StartDate && x.EndDate >= input.EndDate && x.Car.Id == input.CarId);
+    }
+
+    public async Task<List<Rental>> GetAllWithRelationAsync(CancellationToken cancellationToken)
 	{
 		return await _context.Rentals.Include(x => x.Customer).Include(x => x.Car).ToListAsync(cancellationToken);
 	}
