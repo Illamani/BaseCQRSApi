@@ -7,8 +7,8 @@ namespace RentalCar.Persistence.Repository.ModelRepository;
 
 public class CustomerRepository(RentalContext context) : BaseRepository<Customer>(context), ICustomerRepository
 {
-	public async Task<bool> CheckCustomerAdded(string FullName, string Address)
+	public async Task<bool> CheckCustomerAdded(string firstName, string lastName, string Address)
 	{
-		return await context.Customers.AnyAsync(x => x.FullName.ToLower().Trim() == FullName && x.Address.ToLower().Trim() == Address);
+		return await context.Customers.AnyAsync(x => x.FirstName.ToLower().Trim() == firstName && x.LastName.ToLower().Trim() == lastName && x.Address.ToLower().Trim() == Address);
 	}
 }

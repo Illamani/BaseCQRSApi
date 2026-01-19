@@ -9,8 +9,9 @@ public sealed class CheckCustomerAddedHandler(ICustomerRepository customerReposi
 
 	public async Task<bool> Handle(CheckCustomerAddedRequest request, CancellationToken cancellationToken)
 	{
-		var name = request.customerInput.Name.ToLower().Trim() + " " + request.customerInput.LastName.ToLower().Trim();
+		var firstName = request.customerInput.FirstName.ToLower().Trim();
+		var lastName = request.customerInput.LastName.ToLower().Trim();
 		var address = request.customerInput.Address.ToLower().Trim();
-		return await _customerRepository.CheckCustomerAdded(name, address);
+		return await _customerRepository.CheckCustomerAdded(firstName, lastName, address);
 	}
 }

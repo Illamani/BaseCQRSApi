@@ -8,7 +8,7 @@ using RentalCar.Persistence.Context;
 
 #nullable disable
 
-namespace RentalCar.Models.Migrations
+namespace RentalCar.Persistence.Migrations
 {
     [DbContext(typeof(RentalContext))]
     partial class RentalContextModelSnapshot : ModelSnapshot
@@ -30,18 +30,19 @@ namespace RentalCar.Models.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Brand")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("Model")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ServiceId")
+                    b.Property<int?>("ServiceId")
                         .HasColumnType("int");
 
                     b.Property<string>("Type")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -58,15 +59,16 @@ namespace RentalCar.Models.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FullName")
-                        .IsRequired()
+                    b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -81,10 +83,10 @@ namespace RentalCar.Models.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CarId")
+                    b.Property<int?>("CarId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EndDate")
@@ -98,14 +100,18 @@ namespace RentalCar.Models.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CarId");
+                    b.HasIndex("CarId")
+                        .IsUnique()
+                        .HasFilter("[CarId] IS NOT NULL");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("CustomerId")
+                        .IsUnique()
+                        .HasFilter("[CustomerId] IS NOT NULL");
 
                     b.ToTable("Rental", (string)null);
                 });
 
-            modelBuilder.Entity("RentalCar.Domain.Entities.RentalService", b =>
+            modelBuilder.Entity("RentalCar.Domain.Entities.ServiceModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -132,23 +138,19 @@ namespace RentalCar.Models.Migrations
             modelBuilder.Entity("RentalCar.Domain.Entities.Rental", b =>
                 {
                     b.HasOne("RentalCar.Domain.Entities.Car", "Car")
-                        .WithMany()
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne()
+                        .HasForeignKey("RentalCar.Domain.Entities.Rental", "CarId");
 
                     b.HasOne("RentalCar.Domain.Entities.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne()
+                        .HasForeignKey("RentalCar.Domain.Entities.Rental", "CustomerId");
 
                     b.Navigation("Car");
 
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("RentalCar.Domain.Entities.RentalService", b =>
+            modelBuilder.Entity("RentalCar.Domain.Entities.ServiceModel", b =>
                 {
                     b.HasOne("RentalCar.Domain.Entities.Car", null)
                         .WithMany("Services")

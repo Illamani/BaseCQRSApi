@@ -15,8 +15,11 @@ public class RentalContext(DbContextOptions<RentalContext> options) : DbContext(
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
-		modelBuilder.Entity<Car>()
-			.ToTable("Car");
+		modelBuilder.Entity<Car>(c =>
+		{
+			c.ToTable("Car");
+			c.Property(c => c.ServiceId).IsRequired(false);
+		});
 
 		modelBuilder.Entity<Customer>()
 			.ToTable("Customer");
@@ -24,8 +27,8 @@ public class RentalContext(DbContextOptions<RentalContext> options) : DbContext(
 		modelBuilder.Entity<Rental>(e =>
 		{
 			e.ToTable("Rental");
-			e.HasOne(x => x.Customer).WithOne().HasPrincipalKey<Rental>(x => x.CustomerId);
-			e.HasOne(x => x.Car).WithOne().HasPrincipalKey<Rental>(x => x.CarId);
+			e.HasOne(x => x.Customer).WithOne().HasForeignKey<Rental>(x => x.CustomerId).IsRequired(false);
+			e.HasOne(x => x.Car).WithOne().HasForeignKey<Rental>(x => x.CarId).IsRequired(false);
 		});
 
 		modelBuilder.Entity<ServiceModel>()

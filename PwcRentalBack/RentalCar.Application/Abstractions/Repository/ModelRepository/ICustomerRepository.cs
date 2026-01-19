@@ -4,5 +4,5 @@ namespace RentalCar.Application.Abstractions.Repository.ModelRepository;
 
 public interface ICustomerRepository : IBaseRepository<Customer>
 {
-	public Task<bool> CheckCustomerAdded(string FullName, string Address);
+	public Task<bool> CheckCustomerAdded(string firstName, string lastName, string Address);
 }
