@@ -1,0 +1,6 @@
+﻿@RentalCar.Api_HostAddress = https://localhost:44309
+
+@id=0
+GET {{RentalCar.Api_HostAddress}}/api/GetCustomer?id={{id}}
+
+###

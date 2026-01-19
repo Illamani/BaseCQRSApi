@@ -7,7 +7,7 @@ using RentalCar.Domain;
 using RentalCar.Domain.Dto.Car;
 using RentalCar.Domain.Entities;
 
-namespace RentalCar.Api.Controllers;
+namespace RentalCar.Api.RentalEndpoints;
 public class CarEndpoints : ICarterModule
 {
     private static readonly CarMapper _mapper = new();
@@ -48,6 +48,7 @@ public class CarEndpoints : ICarterModule
     public static async Task<IResult> GetCarsAsync(ISender sender, CancellationToken cancellationToken)
     {
         var cars = await sender.Send(new GetAllCarRequest(), cancellationToken);
+
         return  Results.Ok(cars);
     }
 
