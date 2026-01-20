@@ -15,4 +15,8 @@
     <ProjectReference Include="..\RentalCar.Models\RentalCar.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\RegisterRentalFeatures\Get\" />
+  </ItemGroup>
+
 </Project>

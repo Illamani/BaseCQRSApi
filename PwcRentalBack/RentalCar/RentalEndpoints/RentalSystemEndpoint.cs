@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RentalCar.Application.Features.CustomerFeatures.Add;
 using RentalCar.Application.Features.CustomerFeatures.Get;
+using RentalCar.Application.Features.RegisterRentalFeatures.Add;
 using RentalCar.Application.Features.RentalFeatures.Add;
 using RentalCar.Domain.Dto.Customer;
 using RentalCar.Domain.Dto.Rental;
@@ -47,7 +48,7 @@ namespace RentalCar.Api.RentalEndpoints
 
         public static async Task<IResult> RegisterRentalAsync([FromBody] RegisterRentalInput rentalInput, ISender sender, CancellationToken cancellationToken)
         {
-            //var register = await sender.Send(new RegisterRentalRequest(rentalInput), cancellationToken);
+            var register = await sender.Send(new NewRentalRequest(rentalInput), cancellationToken);
 
             return Results.Ok();
         }

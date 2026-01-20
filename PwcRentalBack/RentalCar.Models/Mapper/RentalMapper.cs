@@ -1,4 +1,5 @@
 ﻿using RentalCar.Domain.Dto.Rental;
+using RentalCar.Domain.Dto.RentalSystem.Input;
 using RentalCar.Domain.Entities;
 using Riok.Mapperly.Abstractions;
 namespace RentalCar.Domain.Mapper
@@ -21,5 +22,7 @@ namespace RentalCar.Domain.Mapper
 		public partial Rental RentalInputToRental(RentalInput rentalInput);
 
 		public partial List<Rental> RentalInputsToRentals(List<RentalInput> rentalInputs);
+
+		public partial Rental RegisterRentalToRental(RegisterRentalInput rentalInput);
 	}
 }
